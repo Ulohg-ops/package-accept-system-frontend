@@ -4,17 +4,17 @@ import { Link, useParams } from 'react-router-dom';
 export default function Home() {
 
     const [users,setUsers]=useState([])
-
-    const userid=useParams()
-
+    
     const deleteUser=async(userid)=>{
         await axios.delete(`http://127.0.0.1:8080/student/${userid}`)
         loadUsers()
     }
-
+    
+    //useState 會在render之後被呼叫
     useEffect(()=>{
         loadUsers()
     },[]);
+
     const loadUsers=async()=>{
         const result=await axios.get("http://127.0.0.1:8080/student/getAll")
         setUsers(result.data)

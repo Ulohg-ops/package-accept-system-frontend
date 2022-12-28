@@ -13,12 +13,10 @@ function App() {
     <div className="App">
       <Router>
         <Navbar/>
-
         <Routes>
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="/adduser" element={<AddUser/>}/>
         <Route exact path="/edituser/:userid" element={<EditUser/>}/>
-
        </Routes>
        </Router>
     </div>

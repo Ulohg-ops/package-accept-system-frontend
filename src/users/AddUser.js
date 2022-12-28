@@ -1,26 +1,27 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {useState} from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 export default function AddUser() {
-let navigate=useNavigate()
+    let navigate = useNavigate()
 
     const [user, setUsers] = useState({
-        id:"",
+        id: "",
         name: "",
         email: "",
         department: ""
     })
-    const { id,name, email, department } = user
+    const { id, name, email, department } = user
 
     const onInputChange = (e) => {
         setUsers({ ...user, [e.target.name]: e.target.value });
     }
 
-    const onSumbit =async (e) => {
+    const onSumbit = async (e) => {
         e.preventDefault();
-        await axios.post(("http://127.0.0.1:8080/student/add"),user)
+        await axios.post(("http://127.0.0.1:8080/student/add"), user)
+        .then(console.log("c12"))
         navigate("/")
     };
 
@@ -28,10 +29,13 @@ let navigate=useNavigate()
         <div className='container'>
             <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                 <h2 className="text-center m-4">Register User</h2>
-                <form onSubmit={(e)=>onSumbit(e)}>
-                <div className="mb-3">
+                <form onSubmit={(e) => onSumbit(e)}>
+                    <div className="alert alert-danger" role="alert">
+                        This is a danger alert—check it out!
+                    </div>
+                    <div className="mb-3">
                         <label htmlFor="studentID" className="form-label">
-                        studentID
+                            studentID
                         </label>
                         <input
                             type={"text"}
