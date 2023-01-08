@@ -6,7 +6,7 @@ export default function Home() {
     const [users,setUsers]=useState([])
     
     const deleteUser=async(userid)=>{
-        await axios.delete(`http://127.0.0.1:8080/student/${userid}`)
+        await axios.delete(`http://127.0.0.1:8080/package/${userid}`)
         loadUsers()
     }
     
@@ -16,7 +16,8 @@ export default function Home() {
     },[]);
 
     const loadUsers=async()=>{
-        const result=await axios.get("http://127.0.0.1:8080/student/getAll")
+        const result=await axios.get("http://127.0.0.1:8080/package/getAll")
+        console.log(result)
         setUsers(result.data)
     }
     return (
@@ -26,10 +27,12 @@ export default function Home() {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">StudentID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Department</th>
+                            <th scope="col">packageID</th>
+                            <th scope="col">packageType</th>
+                            <th scope="col">recipient</th>
+                            <th scope="col">notify</th>
+                            <th scope="col">receipted</th>
+                            <th scope="col">deliverTime</th>
                             <th scope="col">Action</th>
 
                         </tr>
@@ -39,10 +42,12 @@ export default function Home() {
                             users.map((user,index)=>(
                             <tr>    
                             <th scope="row" key={index}>{index+1}</th>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.department}</td>
+                            <td>{user.packageID}</td>
+                            <td>{user.packageType}</td>
+                            <td>{user.recipient}</td>
+                            <td>{user.isNotify}</td>
+                            <td>{user.isReceipted}</td>
+                            <td>{user.creationDateTime}</td>
                             <td>
                                 <button className='btn btn-primary mx-2'>View</button>
                                 <Link className='btn btn-outline-primary mx-2' to={`/edituser/${user.id}`}>Edit</Link>
