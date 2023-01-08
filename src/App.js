@@ -3,9 +3,9 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './layout/Navbar';
 import Home from './pages/Home';
-import AddUser from './users/AddUser';
+import Add from './users/Add';
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import EditUser from './users/EditUser';
+import Edit from './users/Edit';
 
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
         <Navbar/>
         <Routes>
         <Route exact path="/" element={<Home/>}/>
-        <Route exact path="/adduser" element={<AddUser/>}/>
-        <Route exact path="/edituser/:userid" element={<EditUser/>}/>
+        <Route exact path="/add" element={<Add/>}/>
+        <Route exact path="/edit/:userid" element={<Edit/>}/>
        </Routes>
        </Router>
     </div>

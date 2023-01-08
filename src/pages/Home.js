@@ -3,22 +3,21 @@ import axios from 'axios'
 import { Link, useParams } from 'react-router-dom';
 export default function Home() {
 
-    const [users,setUsers]=useState([])
+    const [packages,setPackageData]=useState([])
     
-    const deleteUser=async(userid)=>{
-        await axios.delete(`http://127.0.0.1:8080/package/${userid}`)
-        loadUsers()
+    const deletePackage=async(packageID)=>{
+        await axios.delete(`http://127.0.0.1:8080/package/${packageID}`)
+        loadPackageData()
     }
     
     //useState 會在render之後被呼叫
     useEffect(()=>{
-        loadUsers()
+        loadPackageData()
     },[]);
 
-    const loadUsers=async()=>{
+    const loadPackageData=async()=>{
         const result=await axios.get("http://127.0.0.1:8080/package/getAll")
-        console.log(result)
-        setUsers(result.data)
+        setPackageData(result.data)
     }
     return (
         <div className='contiainer'>
@@ -27,34 +26,37 @@ export default function Home() {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">packageID</th>
-                            <th scope="col">packageType</th>
-                            <th scope="col">recipient</th>
-                            <th scope="col">notify</th>
-                            <th scope="col">receipted</th>
-                            <th scope="col">deliverTime</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">郵件ID</th>
+                            <th scope="col">郵件種類</th>
+                            <th scope="col">收件人</th>
+                            <th scope="col">通知狀態</th>
+                            <th scope="col">郵件狀態</th>
+                            <th scope="col">登入日期</th>
+                            <th scope="col">操作</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            users.map((user,index)=>(
+                            packages.map((mypackage,index)=>(
                             <tr>    
                             <th scope="row" key={index}>{index+1}</th>
-                            <td>{user.packageID}</td>
-                            <td>{user.packageType}</td>
-                            <td>{user.recipient}</td>
-                            <td>{user.isNotify}</td>
-                            <td>{user.isReceipted}</td>
-                            <td>{user.creationDateTime}</td>
+                            <td>{mypackage.packageID}</td>
+                            <td>{mypackage.packageType}</td>
+                            <td>{mypackage.recipient}</td>
+                            <td>{mypackage.isNotify}</td>
+                            <td>{mypackage.isReceipted}</td>
+                            {/* <td>{Intl.DateTimeFormat('zh-TW', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(mypackage.creationDateTime)}</td> */}
+                            <td>{mypackage.creationDateTime.replace('T',' ').substring(0,mypackage.creationDateTime.lastIndexOf('.'))}</td>
                             <td>
-                                <button className='btn btn-primary mx-2'>View</button>
-                                <Link className='btn btn-outline-primary mx-2' to={`/edituser/${user.id}`}>Edit</Link>
-                                <button className='btn btn-danger mx-2' onClick={()=>deleteUser(user.id)}>Delete</button>
+                                <button className='btn btn-primary mx-2'>詳細資料</button>
+                                <Link className='btn btn-outline-primary mx-2' to={`/edit/${mypackage.packageID}`}>編輯</Link>
+                                <button className='btn btn-danger mx-2' onClick={()=>deletePackage(mypackage.packageID)}>刪除</button>
                             </td>
                             </tr>
                             ))
+                                                 
+                              
                         }
                     </tbody>
                 </table>

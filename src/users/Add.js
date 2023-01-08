@@ -24,7 +24,7 @@ export default function AddUser() {
         e.preventDefault();
         console.log(myPackage)
         const result = await axios.post(("http://127.0.0.1:8080/package/add"), myPackage)
-        // navigate("/")
+        navigate("/")
     };
 
     return (
